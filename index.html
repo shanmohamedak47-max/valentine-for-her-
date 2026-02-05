@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Valentine 💖</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Floating hearts */
+    .hearts span {
+      position: absolute;
+      bottom: -50px;
+      animation: floatUp 10s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.6); opacity: 0; }
+    }
+
+    .container {
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(12px);
+      padding: 50px 70px;
+      border-radius: 30px;
+      text-align: center;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+      max-width: 900px;
+      width: 90%;
+      z-index: 2;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 46px;
+      color: #fff;
+      margin-bottom: 40px;
+      text-shadow: 2px 4px 15px rgba(0,0,0,0.35);
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+    }
+
+    button {
+      padding: 16px 45px;
+      font-size: 22px;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #yesBtn {
+      background: #ff2e63;
+      color: white;
+      box-shadow: 0 12px 25px rgba(255,46,99,0.5);
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.15);
+    }
+
+    #noBtn {
+      background: white;
+      color: #ff2e63;
+      pointer-events: none;
+      position: relative;
+    }
+
+    /* Result */
+    .result {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .result h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      color: white;
+      text-shadow: 2px 4px 15px rgba(0,0,0,0.35);
+    }
+
+    /* Polaroid Image */
+    .polaroid {
+      background: white;
+      padding: 15px 15px 60px;
+      border-radius: 18px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.45);
+      animation: zoomIn 2.5s ease forwards;
+    }
+
+    .polaroid img {
+      width: 520px;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .caption {
+      margin-top: 15px;
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: #ff5e8a;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(110vh) rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Music -->
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/audio/2023/02/28/audio_1c1cdb90f4.mp3">
+  </audio>
+
+  <!-- Hearts -->
+  <div class="hearts"></div>
+
+  <!-- Proposal -->
+  <div class="container" id="proposal">
+    <h1>NIHALA, WILL YOU BE MY VALENTINE? 💖</h1>
+    <div class="buttons">
+      <button id="yesBtn">YES 💘</button>
+      <button id="noBtn">NO 🙈</button>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div class="container result" id="result">
+    <h2>I KNEW YOU LOVE ME ❤️</h2>
+
+    <div class="polaroid">
+      <img src="./photo.jpg" alt="Our Photo Together">
+      <div class="caption">To more sulaimanieeess together 💕</div>
+    </div>
+  </div>
+
+  <script>
+    // Hearts
+    const hearts = document.querySelector('.hearts');
+    const emojis = ['❤️','💖','💘','💕','💞','💓'];
+
+    for (let i = 0; i < 35; i++) {
+      const span = document.createElement('span');
+      span.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+      span.style.left = Math.random()*100 + 'vw';
+      span.style.fontSize = (22 + Math.random()*22) + 'px';
+      span.style.animationDuration = (6 + Math.random()*6) + 's';
+      hearts.appendChild(span);
+    }
+
+    // NO button escape
+    document.addEventListener('mousemove', () => {
+      const no = document.getElementById('noBtn');
+      no.style.transform =
+        `translate(${Math.random()*400-200}px, ${Math.random()*300-150}px)`;
+    });
+
+    // YES click
+    document.getElementById('yesBtn').onclick = () => {
+      document.getElementById('proposal').style.display = 'none';
+      document.getElementById('result').style.display = 'flex';
+      document.getElementById('bgMusic').play();
+
+      for (let i = 0; i < 120; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random()*100 + 'vw';
+        c.style.background = `hsl(${Math.random()*360},100%,70%)`;
+        c.style.animationDuration = (2 + Math.random()*3) + 's';
+        document.body.appendChild(c);
+      }
+    };
+  </script>
+
+</body>
+</html>
